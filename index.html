@@ -3,624 +3,631 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexaForge — GitHub Hosting Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>NexaForge AI — Price Action Trading Platform</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;--bg4:#21262d;
-  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
-  --g:#3fb950;--g-dim:rgba(63,185,80,0.1);--g-dim2:rgba(63,185,80,0.18);
-  --b:#58a6ff;--b-dim:rgba(88,166,255,0.1);
-  --a:#d29922;--a-dim:rgba(210,153,34,0.12);
-  --r:#f85149;--r-dim:rgba(248,81,73,0.1);
-  --p:#bc8cff;--p-dim:rgba(188,140,255,0.1);
-  --text:#c9d1d9;--text2:#8b949e;--text3:#484f58;
-  --mono:'JetBrains Mono',monospace;
-  --sans:'Sora',sans-serif;
-}
-html{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
-body{max-width:860px;margin:0 auto;padding:32px 24px 60px}
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
 
-/* HEADER */
-.hero{margin-bottom:40px;padding-bottom:28px;border-bottom:1px solid var(--border)}
-.breadcrumb{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
-.breadcrumb span{color:var(--g)}
-h1{font-size:28px;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.2}
-h1 em{font-style:normal;color:var(--b)}
-.subtitle{color:var(--text2);font-size:14px;max-width:600px;line-height:1.7}
-.badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.badge{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:20px;border:1px solid}
-.badge-g{background:var(--g-dim);color:var(--g);border-color:rgba(63,185,80,0.3)}
-.badge-b{background:var(--b-dim);color:var(--b);border-color:rgba(88,166,255,0.3)}
-.badge-a{background:var(--a-dim);color:var(--a);border-color:rgba(210,153,34,0.3)}
+  :root {
+    --bg: #0a0c0f;
+    --bg2: #111418;
+    --bg3: #181c22;
+    --bg4: #1e242c;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e2e8f0;
+    --text2: #8892a0;
+    --text3: #4a5568;
+    --green: #00d4a1;
+    --green2: #00a87f;
+    --green-bg: rgba(0,212,161,0.1);
+    --red: #ff4d6a;
+    --red2: #cc2244;
+    --red-bg: rgba(255,77,106,0.1);
+    --amber: #f5a623;
+    --amber-bg: rgba(245,166,35,0.1);
+    --blue: #4da8ff;
+    --blue-bg: rgba(77,168,255,0.1);
+    --purple: #a78bfa;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --r: 8px;
+  }
 
-/* TOC */
-.toc{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:36px}
-.toc-title{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
-.toc-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 20px}
-.toc-list li a{color:var(--b);font-size:12px;text-decoration:none;font-family:var(--mono);transition:color .15s}
-.toc-list li a:hover{color:#fff}
-.toc-num{color:var(--text3);margin-right:6px}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; min-height: 100vh; overflow-x: hidden; }
 
-/* STEP BLOCKS */
-.phase{margin-bottom:40px}
-.phase-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.phase-num{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:600;flex-shrink:0}
-.phase-num.g{background:var(--g-dim2);color:var(--g)}.phase-num.b{background:var(--b-dim);color:var(--b)}.phase-num.a{background:var(--a-dim);color:var(--a)}.phase-num.p{background:var(--p-dim);color:var(--p)}.phase-num.r{background:var(--r-dim);color:var(--r)}
-.phase-title{font-size:17px;font-weight:600;color:#fff}
-.phase-sub{font-size:12px;color:var(--text2);margin-top:1px}
+  /* LAYOUT */
+  .app { display: grid; grid-template-rows: 56px 1fr; min-height: 100vh; }
+  .header { background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; gap: 16px; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--green); letter-spacing: 0.08em; white-space: nowrap; }
+  .logo span { color: var(--text2); }
+  .market-strip { flex: 1; display: flex; gap: 20px; overflow: hidden; }
+  .tick { display: flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 12px; }
+  .tick-sym { font-family: var(--mono); font-weight: 700; color: var(--text); font-size: 11px; }
+  .tick-price { font-family: var(--mono); font-size: 12px; }
+  .tick-chg { font-size: 11px; padding: 1px 5px; border-radius: 3px; font-weight: 500; }
+  .up { color: var(--green); } .up-bg { background: var(--green-bg); color: var(--green); }
+  .dn { color: var(--red); } .dn-bg { background: var(--red-bg); color: var(--red); }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-left: auto; box-shadow: 0 0 6px var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .status-label { font-size: 11px; color: var(--green); font-family: var(--mono); }
 
-.step{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden}
-.step-header{display:flex;align-items:flex-start;gap:14px;padding:16px 18px}
-.step-num{font-family:var(--mono);font-size:11px;color:var(--text3);min-width:24px;margin-top:2px}
-.step-body{flex:1}
-.step-title{font-size:13px;font-weight:500;color:#e6edf3;margin-bottom:4px}
-.step-desc{font-size:12px;color:var(--text2);line-height:1.65}
-.step-img{background:var(--bg3);border-top:1px solid var(--border);padding:14px 18px}
-.ui-mock{border:1px solid var(--border2);border-radius:8px;overflow:hidden;font-size:11px}
-.ui-bar{background:var(--bg4);padding:8px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
-.ui-dot{width:8px;height:8px;border-radius:50%}
-.ui-url{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 10px;font-family:var(--mono);font-size:10px;color:var(--text2)}
-.ui-body{padding:14px 16px;background:var(--bg2)}
-.ui-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
-.ui-row:last-child{border-bottom:none}
-.ui-label{font-size:11px;color:var(--text2);width:120px;flex-shrink:0}
-.ui-value{font-size:11px;color:var(--text);font-family:var(--mono)}
-.ui-btn{padding:4px 12px;border-radius:5px;font-size:10px;font-family:var(--mono);font-weight:600;border:none;cursor:pointer}
-.ui-btn-g{background:var(--g);color:#000}.ui-btn-b{background:var(--b-dim);color:var(--b);border:1px solid var(--b)}
-.ui-input{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:4px 10px;font-family:var(--mono);font-size:11px;color:var(--text);width:200px}
-.ui-select{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:4px 10px;font-family:var(--mono);font-size:11px;color:var(--text)}
-.ui-toggle{display:flex;align-items:center;gap:8px}
-.ui-toggle-track{width:32px;height:16px;background:var(--g);border-radius:8px;position:relative}
-.ui-toggle-thumb{width:12px;height:12px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px}
-.highlight-box{border:2px dashed var(--a);border-radius:6px;padding:8px 10px;background:var(--a-dim);margin-top:8px;font-size:10px;color:var(--a);font-family:var(--mono)}
-.arrow-down{text-align:center;padding:4px 0;color:var(--text3);font-size:16px}
+  .main { display: grid; grid-template-columns: 260px 1fr 300px; gap: 0; min-height: calc(100vh - 56px); }
 
-/* CODE BLOCKS */
-.code-block{background:var(--bg3);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:10px 0}
-.code-header{background:var(--bg4);padding:7px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
-.code-lang{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
-.code-label{font-family:var(--mono);font-size:10px;color:var(--text2)}
-pre{padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.7}
-.c-g{color:var(--g)}.c-b{color:var(--b)}.c-a{color:var(--a)}.c-p{color:var(--p)}.c-r{color:var(--r)}.c-t{color:var(--text2)}
+  /* SIDEBAR */
+  .sidebar { background: var(--bg2); border-right: 1px solid var(--border); padding: 16px 0; overflow-y: auto; }
+  .sidebar-section { padding: 0 16px 20px; }
+  .sidebar-title { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; font-family: var(--mono); }
+  .watchlist-item { display: flex; align-items: center; padding: 8px 10px; border-radius: var(--r); cursor: pointer; gap: 8px; transition: background .15s; }
+  .watchlist-item:hover, .watchlist-item.active { background: var(--bg3); }
+  .watchlist-item.active { border-left: 2px solid var(--green); }
+  .wi-sym { font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--text); flex: 1; }
+  .wi-info { text-align: right; }
+  .wi-price { font-family: var(--mono); font-size: 12px; color: var(--text); }
+  .wi-chg { font-size: 10px; }
 
-/* CALLOUTS */
-.callout{border-radius:8px;padding:12px 14px;margin:10px 0;display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.65}
-.callout-icon{font-size:14px;margin-top:1px;flex-shrink:0}
-.callout.tip{background:var(--b-dim);border:1px solid rgba(88,166,255,0.2);color:var(--b)}
-.callout.warn{background:var(--a-dim);border:1px solid rgba(210,153,34,0.25);color:var(--a)}
-.callout.success{background:var(--g-dim);border:1px solid rgba(63,185,80,0.2);color:var(--g)}
-.callout.danger{background:var(--r-dim);border:1px solid rgba(248,81,73,0.2);color:var(--r)}
+  .signal-row { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: var(--r); margin-bottom: 4px; border: 1px solid var(--border); background: var(--bg3); }
+  .signal-type { font-size: 10px; font-family: var(--mono); font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  .buy-sig { background: var(--green-bg); color: var(--green); }
+  .sell-sig { background: var(--red-bg); color: var(--red); }
+  .signal-sym { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--text); }
+  .signal-conf { margin-left: auto; font-size: 10px; color: var(--amber); }
 
-/* FILE TREE */
-.file-tree{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:var(--mono);font-size:12px;line-height:2}
-.ft-dir{color:var(--b)}.ft-file{color:var(--text2)}.ft-main{color:var(--g);font-weight:600}.ft-new{color:var(--a)}
-.ft-indent{padding-left:20px}
+  /* CENTER CHART */
+  .center { padding: 16px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+  .chart-header { display: flex; align-items: center; gap: 16px; }
+  .chart-sym { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--text); }
+  .chart-price { font-family: var(--mono); font-size: 20px; color: var(--green); }
+  .chart-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+  .timeframes { display: flex; gap: 4px; margin-left: auto; }
+  .tf-btn { padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-size: 11px; cursor: pointer; font-family: var(--mono); transition: all .15s; }
+  .tf-btn.active, .tf-btn:hover { background: var(--bg4); color: var(--text); border-color: var(--border2); }
 
-/* URL RESULT */
-.url-result{background:var(--bg3);border:1px solid var(--g);border-radius:8px;padding:14px 16px;margin:10px 0;display:flex;align-items:center;gap:12px}
-.url-icon{width:28px;height:28px;background:var(--g-dim2);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--g);font-size:14px;flex-shrink:0}
-.url-text{font-family:var(--mono);font-size:12px;color:var(--g);word-break:break-all}
-.url-sub{font-size:10px;color:var(--text3);margin-top:2px}
+  .chart-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 16px; }
+  .chart-label { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-bottom: 10px; }
 
-/* CHECKLIST */
-.checklist{list-style:none}
-.checklist li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border)}
-.checklist li:last-child{border-bottom:none}
-.check{width:16px;height:16px;border-radius:3px;background:var(--g-dim2);border:1px solid var(--g);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:9px;color:var(--g)}
+  .indicators-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .ind-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 12px; }
+  .ind-label { font-size: 10px; color: var(--text3); font-family: var(--mono); text-transform: uppercase; margin-bottom: 4px; }
+  .ind-value { font-family: var(--mono); font-size: 16px; font-weight: 700; }
+  .ind-sub { font-size: 10px; color: var(--text2); margin-top: 2px; }
 
-/* COMPARISON TABLE */
-.comp-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
-.comp-table th{background:var(--bg3);padding:8px 12px;text-align:left;font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;border:1px solid var(--border)}
-.comp-table td{padding:9px 12px;border:1px solid var(--border);color:var(--text2);vertical-align:top}
-.comp-table .feature{color:var(--text);font-weight:500}
+  /* RIGHT PANEL */
+  .right-panel { background: var(--bg2); border-left: 1px solid var(--border); padding: 16px; overflow-y: auto; }
+  .panel-section { margin-bottom: 24px; }
+  .panel-title { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; font-family: var(--mono); }
 
-/* FOOTER */
-.footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text3);font-family:var(--mono)}
+  /* AI SIGNAL CARD */
+  .ai-signal { border: 1px solid var(--border2); border-radius: var(--r); padding: 14px; margin-bottom: 10px; position: relative; overflow: hidden; }
+  .ai-signal.buy { border-color: rgba(0,212,161,0.3); background: linear-gradient(135deg, rgba(0,212,161,0.05) 0%, transparent 60%); }
+  .ai-signal.sell { border-color: rgba(255,77,106,0.3); background: linear-gradient(135deg, rgba(255,77,106,0.05) 0%, transparent 60%); }
+  .ai-signal.hold { border-color: rgba(245,166,35,0.3); background: linear-gradient(135deg, rgba(245,166,35,0.05) 0%, transparent 60%); }
+  .sig-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .sig-action { font-family: var(--mono); font-weight: 700; font-size: 13px; }
+  .sig-sym { font-size: 11px; color: var(--text2); }
+  .sig-time { font-size: 10px; color: var(--text3); margin-left: auto; font-family: var(--mono); }
+  .sig-body { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .sig-meta { display: flex; gap: 10px; margin-top: 8px; }
+  .sig-meta-item { font-size: 10px; }
+  .sig-meta-item span { color: var(--text3); }
+  .confidence-bar { height: 3px; background: var(--bg4); border-radius: 2px; margin-top: 8px; }
+  .confidence-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+
+  /* TRADE HISTORY TABLE */
+  .trade-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .trade-table th { color: var(--text3); font-family: var(--mono); font-size: 9px; text-transform: uppercase; padding: 6px 4px; border-bottom: 1px solid var(--border); text-align: left; letter-spacing: 0.05em; }
+  .trade-table td { padding: 7px 4px; border-bottom: 1px solid var(--border); color: var(--text2); font-family: var(--mono); font-size: 10px; }
+  .pnl-pos { color: var(--green); }
+  .pnl-neg { color: var(--red); }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box { background: var(--bg3); border-radius: 6px; padding: 10px; }
+  .stat-num { font-family: var(--mono); font-size: 18px; font-weight: 700; }
+  .stat-lbl { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+  /* AI LOG */
+  .ai-log { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 10px; font-family: var(--mono); font-size: 10px; color: var(--text2); height: 180px; overflow-y: auto; line-height: 1.7; }
+  .log-line { display: flex; gap: 8px; }
+  .log-time { color: var(--text3); white-space: nowrap; }
+  .log-buy { color: var(--green); }
+  .log-sell { color: var(--red); }
+  .log-info { color: var(--blue); }
+  .log-warn { color: var(--amber); }
+
+  /* EXECUTE BTN */
+  .exec-btn { width: 100%; padding: 12px; border-radius: var(--r); border: none; font-family: var(--mono); font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: 0.08em; transition: all .2s; }
+  .exec-buy { background: var(--green); color: #000; }
+  .exec-buy:hover { background: var(--green2); transform: translateY(-1px); }
+  .exec-sell { background: var(--red); color: #fff; }
+  .exec-sell:hover { background: var(--red2); transform: translateY(-1px); }
+  .exec-hold { background: var(--bg4); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+
+  /* PROMPT BOX */
+  .prompt-box { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--r); padding: 12px; margin-top: 12px; }
+  .prompt-label { font-size: 10px; color: var(--purple); font-family: var(--mono); margin-bottom: 6px; }
+  .prompt-text { font-size: 11px; color: var(--text2); line-height: 1.6; font-style: italic; }
+
+  /* CANDLESTICK CANVAS OVERLAY */
+  .chart-container { position: relative; width: 100%; }
+
+  .badge { font-size: 9px; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-weight: 700; text-transform: uppercase; }
+  .badge-live { background: rgba(0,212,161,0.15); color: var(--green); border: 1px solid rgba(0,212,161,0.3); }
+  .badge-paper { background: rgba(245,166,35,0.15); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+
+  ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 </style>
 </head>
 <body>
+<div class="app">
 
-<!-- HEADER -->
-<div class="hero">
-  <div class="breadcrumb">NexaForge AI · <span>Deployment Guide</span></div>
-  <h1>Host Your <em>AI Trading Platform</em><br>on GitHub Pages</h1>
-  <div class="subtitle">Complete step-by-step guide to deploy both the AI Trading Platform and Slippage Tracker as free, publicly accessible web apps — no server required.</div>
-  <div class="badges">
-    <span class="badge badge-g">Free Hosting</span>
-    <span class="badge badge-b">GitHub Pages</span>
-    <span class="badge badge-a">~15 min setup</span>
-    <span class="badge badge-g">HTTPS included</span>
-  </div>
-</div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">NEXAFORGE <span>AI TRADER</span></div>
+    <div class="market-strip" id="marketStrip"></div>
+    <span class="badge badge-paper">PAPER TRADING</span>
+    <div class="status-dot"></div>
+    <span class="status-label">LIVE</span>
+  </header>
 
-<!-- TOC -->
-<div class="toc">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list">
-    <li><a href="#phase1"><span class="toc-num">01</span>Create GitHub Account</a></li>
-    <li><a href="#phase2"><span class="toc-num">02</span>Create Repository</a></li>
-    <li><a href="#phase3"><span class="toc-num">03</span>Upload Your Files</a></li>
-    <li><a href="#phase4"><span class="toc-num">04</span>Enable GitHub Pages</a></li>
-    <li><a href="#phase5"><span class="toc-num">05</span>Access Your Live URL</a></li>
-    <li><a href="#phase6"><span class="toc-num">06</span>Share for Testing</a></li>
-    <li><a href="#phase7"><span class="toc-num">07</span>Update Your Code</a></li>
-    <li><a href="#phase8"><span class="toc-num">08</span>Custom Domain (Optional)</a></li>
-  </ul>
-</div>
+  <div class="main">
 
-<!-- PHASE 1 -->
-<div class="phase" id="phase1">
-  <div class="phase-header">
-    <div class="phase-num g">01</div>
-    <div><div class="phase-title">Create a GitHub Account</div><div class="phase-sub">Skip this if you already have one</div></div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">1.1</div>
-      <div class="step-body">
-        <div class="step-title">Go to github.com and sign up</div>
-        <div class="step-desc">Navigate to <strong style="color:var(--b)">https://github.com</strong> and click <em>Sign Up</em>. Choose a username — this becomes part of your live URL, so pick something professional like <code style="color:var(--g);font-family:var(--mono)">marcnexaforge</code> or <code style="color:var(--g);font-family:var(--mono)">nexaforgeai</code>.</div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Watchlist</div>
+        <div id="watchlistEl"></div>
       </div>
-    </div>
-    <div class="step-img">
-      <div class="ui-mock">
-        <div class="ui-bar"><div class="ui-dot" style="background:#ff5f57"></div><div class="ui-dot" style="background:#febc2e"></div><div class="ui-dot" style="background:#28c840"></div><div class="ui-url">github.com/signup</div></div>
-        <div class="ui-body">
-          <div class="ui-row"><div class="ui-label">Username</div><div><input class="ui-input" value="nexaforgeai" readonly></div></div>
-          <div class="ui-row"><div class="ui-label">Email</div><div><input class="ui-input" value="marc@nexaforge.ai" readonly></div></div>
-          <div class="ui-row"><div class="ui-label">Password</div><div><input class="ui-input" value="••••••••••••" readonly></div></div>
-          <div style="margin-top:10px"><button class="ui-btn ui-btn-g">Continue →</button></div>
-        </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Active Signals</div>
+        <div id="signalsList"></div>
       </div>
-    </div>
-  </div>
+    </aside>
 
-  <div class="callout tip"><div class="callout-icon">i</div><div>Your GitHub username becomes your URL: <strong>https://nexaforgeai.github.io/ai-trader/</strong> — choose it carefully since changing it later breaks links.</div></div>
-</div>
-
-<!-- PHASE 2 -->
-<div class="phase" id="phase2">
-  <div class="phase-header">
-    <div class="phase-num b">02</div>
-    <div><div class="phase-title">Create a New Repository</div><div class="phase-sub">This is the folder that holds your app files</div></div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">2.1</div>
-      <div class="step-body">
-        <div class="step-title">Click the "+" icon → New repository</div>
-        <div class="step-desc">In the top-right corner of GitHub, click the <strong>+</strong> icon and select <em>New repository</em>. You can also go directly to <strong style="color:var(--b)">https://github.com/new</strong>.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">2.2</div>
-      <div class="step-body">
-        <div class="step-title">Fill in the repository details</div>
-        <div class="step-desc">Name it something clear and memorable. Set visibility to <strong>Public</strong> — GitHub Pages requires public repos on the free plan.</div>
-      </div>
-    </div>
-    <div class="step-img">
-      <div class="ui-mock">
-        <div class="ui-bar"><div class="ui-dot" style="background:#ff5f57"></div><div class="ui-dot" style="background:#febc2e"></div><div class="ui-dot" style="background:#28c840"></div><div class="ui-url">github.com/new</div></div>
-        <div class="ui-body">
-          <div class="ui-row"><div class="ui-label">Repository name</div><div><input class="ui-input" value="ai-trading-platform" readonly></div></div>
-          <div class="ui-row"><div class="ui-label">Description</div><div><input class="ui-input" value="NexaForge AI Price Action Trader" readonly></div></div>
-          <div class="ui-row"><div class="ui-label">Visibility</div>
-            <div style="display:flex;gap:10px">
-              <span style="font-size:11px;color:var(--g);font-family:var(--mono)">● Public</span>
-              <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">○ Private</span>
-            </div>
-          </div>
-          <div class="ui-row"><div class="ui-label">Add README</div><div><input type="checkbox" checked readonly> <span style="font-size:11px;color:var(--text2)">Initialize this repository</span></div></div>
-          <div style="margin-top:10px"><button class="ui-btn ui-btn-g">Create repository</button></div>
-          <div class="highlight-box">⚠ Must be PUBLIC for free GitHub Pages hosting</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout warn"><div class="callout-icon">!</div><div><strong>Repository name tip:</strong> Use lowercase with hyphens only — no spaces or special characters. Your final URL will be <strong>https://[username].github.io/ai-trading-platform/</strong></div></div>
-</div>
-
-<!-- PHASE 3 -->
-<div class="phase" id="phase3">
-  <div class="phase-header">
-    <div class="phase-num a">03</div>
-    <div><div class="phase-title">Upload Your Files</div><div class="phase-sub">Two methods — browser upload (easy) or Git CLI (recommended)</div></div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">3.1</div>
-      <div class="step-body">
-        <div class="step-title">Prepare your files — rename the main file to index.html</div>
-        <div class="step-desc">GitHub Pages serves <code style="color:var(--g);font-family:var(--mono)">index.html</code> as the homepage automatically. Rename your main file, then organize your files like this:</div>
-      </div>
-    </div>
-    <div class="step-img">
-      <div class="file-tree">
-        <div><span class="ft-dir">ai-trading-platform/</span></div>
-        <div class="ft-indent"><span class="ft-main">index.html</span> <span style="color:var(--text3);font-size:10px">← rename ai_trading_platform.html to this</span></div>
-        <div class="ft-indent"><span class="ft-new">slippage-tracker.html</span> <span style="color:var(--text3);font-size:10px">← keep this name (secondary page)</span></div>
-        <div class="ft-indent"><span class="ft-file">README.md</span> <span style="color:var(--text3);font-size:10px">← auto-created by GitHub</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">3.2a</div>
-      <div class="step-body">
-        <div class="step-title">Method A — Browser Upload (No coding required)</div>
-        <div class="step-desc">Inside your new repository, click <strong>Add file → Upload files</strong>. Drag and drop both HTML files into the upload area. Add a commit message like <em>"Add trading platform files"</em> and click <strong>Commit changes</strong>.</div>
-      </div>
-    </div>
-    <div class="step-img">
-      <div class="ui-mock">
-        <div class="ui-bar"><div class="ui-dot" style="background:#ff5f57"></div><div class="ui-dot" style="background:#febc2e"></div><div class="ui-dot" style="background:#28c840"></div><div class="ui-url">github.com/nexaforgeai/ai-trading-platform/upload</div></div>
-        <div class="ui-body">
-          <div style="border:2px dashed var(--border2);border-radius:8px;padding:20px;text-align:center;margin-bottom:12px">
-            <div style="font-size:11px;color:var(--text2)">Drag files here or</div>
-            <button class="ui-btn ui-btn-b" style="margin-top:6px">Choose files</button>
-            <div style="font-size:10px;color:var(--text3);margin-top:8px">index.html · slippage-tracker.html</div>
-          </div>
-          <div class="ui-row"><div class="ui-label">Commit message</div><div><input class="ui-input" value="Add trading platform files" readonly></div></div>
-          <div style="margin-top:10px"><button class="ui-btn ui-btn-g">Commit changes</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">3.2b</div>
-      <div class="step-body">
-        <div class="step-title">Method B — Git CLI (Recommended for ongoing updates)</div>
-        <div class="step-desc">Open Terminal (Mac/Linux) or Git Bash (Windows). Run these commands one at a time from the folder where your HTML files live. This method makes future updates much faster.</div>
-      </div>
-    </div>
-    <div class="step-img">
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><span class="code-label">Terminal — run in your project folder</span></div>
-        <pre><span class="c-t"># Step 1: Initialize git in your project folder</span>
-<span class="c-g">git</span> init
-
-<span class="c-t"># Step 2: Connect to your GitHub repo (replace with YOUR username)</span>
-<span class="c-g">git</span> remote add origin <span class="c-b">https://github.com/nexaforgeai/ai-trading-platform.git</span>
-
-<span class="c-t"># Step 3: Stage all your files</span>
-<span class="c-g">git</span> add .
-
-<span class="c-t"># Step 4: Commit with a message</span>
-<span class="c-g">git</span> commit -m <span class="c-a">"Initial commit: AI Trading Platform + Slippage Tracker"</span>
-
-<span class="c-t"># Step 5: Set branch to main and push</span>
-<span class="c-g">git</span> branch -M main
-<span class="c-g">git</span> push -u origin main</pre>
-      </div>
-      <div class="callout tip" style="margin-top:8px"><div class="callout-icon">i</div><div>Don't have Git installed? Download it free at <strong>https://git-scm.com/downloads</strong> — takes 2 minutes to install on Windows or Mac.</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- PHASE 4 -->
-<div class="phase" id="phase4">
-  <div class="phase-header">
-    <div class="phase-num p">04</div>
-    <div><div class="phase-title">Enable GitHub Pages</div><div class="phase-sub">This is what turns your repo into a live website</div></div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">4.1</div>
-      <div class="step-body">
-        <div class="step-title">Go to repository Settings → Pages</div>
-        <div class="step-desc">Inside your repository, click the <strong>Settings</strong> tab (top navigation). In the left sidebar, scroll down to <strong>Code and automation</strong> and click <strong>Pages</strong>.</div>
-      </div>
-    </div>
-    <div class="step-img">
-      <div class="ui-mock">
-        <div class="ui-bar"><div class="ui-dot" style="background:#ff5f57"></div><div class="ui-dot" style="background:#febc2e"></div><div class="ui-dot" style="background:#28c840"></div><div class="ui-url">github.com/nexaforgeai/ai-trading-platform/settings/pages</div></div>
-        <div class="ui-body">
-          <div style="display:grid;grid-template-columns:160px 1fr;gap:16px">
-            <div style="border-right:1px solid var(--border);padding-right:12px">
-              <div style="font-size:10px;color:var(--text3);margin-bottom:8px;font-family:var(--mono);text-transform:uppercase">Settings</div>
-              <div style="font-size:11px;color:var(--text2);padding:4px 0">General</div>
-              <div style="font-size:11px;color:var(--text2);padding:4px 0">Collaborators</div>
-              <div style="font-size:11px;color:var(--text3);padding:4px 0;font-size:10px;text-transform:uppercase;margin-top:8px;font-family:var(--mono)">Code & Automation</div>
-              <div style="font-size:11px;color:var(--text2);padding:4px 0">Actions</div>
-              <div style="font-size:11px;color:var(--b);padding:4px 0;font-weight:500">● Pages</div>
-              <div style="font-size:11px;color:var(--text2);padding:4px 0">Webhooks</div>
-            </div>
-            <div>
-              <div style="font-size:14px;color:#fff;font-weight:500;margin-bottom:12px">GitHub Pages</div>
-              <div class="ui-row"><div class="ui-label">Source</div>
-                <select class="ui-select"><option>Deploy from a branch</option></select>
-              </div>
-              <div class="ui-row"><div class="ui-label">Branch</div>
-                <div style="display:flex;gap:8px">
-                  <select class="ui-select"><option>main</option></select>
-                  <select class="ui-select"><option>/ (root)</option></select>
-                  <button class="ui-btn ui-btn-g">Save</button>
-                </div>
-              </div>
-              <div class="highlight-box">← Select "main" branch + "/ (root)" then click Save</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">4.2</div>
-      <div class="step-body">
-        <div class="step-title">Watch the deployment build in Actions tab</div>
-        <div class="step-desc">After clicking Save, GitHub automatically kicks off a deployment. Click the <strong>Actions</strong> tab to watch it build in real time. A yellow dot means building, green checkmark means live.</div>
-      </div>
-    </div>
-    <div class="step-img">
-      <div class="ui-mock">
-        <div class="ui-bar"><div class="ui-dot" style="background:#ff5f57"></div><div class="ui-dot" style="background:#febc2e"></div><div class="ui-dot" style="background:#28c840"></div><div class="ui-url">github.com/nexaforgeai/ai-trading-platform/actions</div></div>
-        <div class="ui-body">
-          <div class="ui-row">
-            <span style="width:10px;height:10px;border-radius:50%;background:var(--g);display:inline-block;flex-shrink:0"></span>
-            <span style="font-size:11px;color:var(--text)">pages build and deployment</span>
-            <span style="font-size:10px;color:var(--text3);margin-left:auto">completed in 32s</span>
-          </div>
-          <div class="ui-row">
-            <span style="width:10px;height:10px;border-radius:50%;background:var(--a);display:inline-block;flex-shrink:0;animation:pulse 1s infinite"></span>
-            <span style="font-size:11px;color:var(--text2)">pages build and deployment</span>
-            <span style="font-size:10px;color:var(--text3);margin-left:auto">in progress...</span>
-          </div>
-          <div style="font-size:10px;color:var(--text3);margin-top:8px">Green = your site is live. Usually takes 1–3 minutes.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout success"><div class="callout-icon">✓</div><div>Build typically completes in <strong>1–3 minutes</strong>. If it fails, check the Actions tab for error details — most common issue is a missing <code>index.html</code> at the root level.</div></div>
-</div>
-
-<!-- PHASE 5 -->
-<div class="phase" id="phase5">
-  <div class="phase-header">
-    <div class="phase-num g">05</div>
-    <div><div class="phase-title">Access Your Live URL</div><div class="phase-sub">Your app is now publicly accessible on the internet</div></div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">5.1</div>
-      <div class="step-body">
-        <div class="step-title">Find your URL in Settings → Pages</div>
-        <div class="step-desc">Go back to <strong>Settings → Pages</strong>. You'll see a green banner with your live URL. GitHub Pages follows a predictable URL pattern based on your username and repo name.</div>
-      </div>
-    </div>
-    <div class="step-img">
-      <div class="url-result">
-        <div class="url-icon">🌐</div>
+    <!-- CENTER -->
+    <main class="center">
+      <div class="chart-header">
         <div>
-          <div class="url-text">https://nexaforgeai.github.io/ai-trading-platform/</div>
-          <div class="url-sub">AI Trading Platform — main app (index.html)</div>
+          <div class="chart-sym" id="activeSymbol">AAPL</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:3px;">
+            <div class="chart-price" id="activePrice">$182.63</div>
+            <div class="chart-badge up-bg up" id="activeChg">+1.24%</div>
+          </div>
+        </div>
+        <div class="timeframes">
+          <button class="tf-btn" onclick="setTF(this,'1m')">1m</button>
+          <button class="tf-btn active" onclick="setTF(this,'5m')">5m</button>
+          <button class="tf-btn" onclick="setTF(this,'15m')">15m</button>
+          <button class="tf-btn" onclick="setTF(this,'1h')">1H</button>
+          <button class="tf-btn" onclick="setTF(this,'1d')">1D</button>
         </div>
       </div>
-      <div class="url-result">
-        <div class="url-icon">📊</div>
-        <div>
-          <div class="url-text">https://nexaforgeai.github.io/ai-trading-platform/slippage-tracker.html</div>
-          <div class="url-sub">Slippage Tracker — secondary page</div>
+
+      <!-- PRICE CHART -->
+      <div class="chart-card">
+        <div class="chart-label">PRICE ACTION — CANDLESTICK VIEW (SIMULATED LIVE FEED)</div>
+        <div class="chart-container" style="height:260px;">
+          <canvas id="priceChart"></canvas>
         </div>
       </div>
 
-      <div class="code-block" style="margin-top:12px">
-        <div class="code-header"><span class="code-lang">pattern</span><span class="code-label">URL formula</span></div>
-        <pre>https://<span class="c-g">[your-github-username]</span>.github.io/<span class="c-b">[repository-name]</span>/
-https://<span class="c-g">[your-github-username]</span>.github.io/<span class="c-b">[repository-name]</span>/<span class="c-a">[filename.html]</span></pre>
+      <!-- VOLUME + RSI -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="chart-card">
+          <div class="chart-label">VOLUME</div>
+          <div style="height:100px;"><canvas id="volChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-label">RSI (14)</div>
+          <div style="height:100px;"><canvas id="rsiChart"></canvas></div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="callout tip"><div class="callout-icon">i</div><div>Test both URLs in an incognito/private browser window to confirm they load for someone who has never visited before — this simulates what your testers will see.</div></div>
-</div>
+      <!-- INDICATORS -->
+      <div class="indicators-row" id="indicatorsRow"></div>
+    </main>
 
-<!-- PHASE 6 -->
-<div class="phase" id="phase6">
-  <div class="phase-header">
-    <div class="phase-num b">06</div>
-    <div><div class="phase-title">Share for Testing</div><div class="phase-sub">Get testers onboarded quickly</div></div>
-  </div>
+    <!-- RIGHT PANEL -->
+    <aside class="right-panel">
 
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">6.1</div>
-      <div class="step-body">
-        <div class="step-title">Create a README.md with testing instructions</div>
-        <div class="step-desc">In your repository, edit the README.md file (click the pencil icon). Add clear instructions so testers know what they're looking at. Here's a ready-to-use template:</div>
+      <div class="panel-section">
+        <div class="panel-title">AI Signal — Current</div>
+        <div id="currentSignal"></div>
+        <button class="exec-btn exec-buy" id="execBtn" onclick="executeSignal()">▲ EXECUTE BUY</button>
       </div>
-    </div>
-    <div class="step-img">
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">markdown</span><span class="code-label">README.md — copy and paste this</span></div>
-        <pre><span class="c-b"># NexaForge AI Trading Platform</span>
 
-<span class="c-t">AI-powered price action trading system with real-time signal</span>
-<span class="c-t">generation, slippage tracking, and performance analytics.</span>
-
-<span class="c-g">## Live Demo</span>
-
-<span class="c-t">- **Trading Platform:** https://nexaforgeai.github.io/ai-trading-platform/</span>
-<span class="c-t">- **Slippage Tracker:** https://nexaforgeai.github.io/ai-trading-platform/slippage-tracker.html</span>
-
-<span class="c-g">## Testing Instructions</span>
-
-<span class="c-t">1. Open the Trading Platform link above</span>
-<span class="c-t">2. Click any symbol in the watchlist (left sidebar) to switch charts</span>
-<span class="c-t">3. Watch the AI Signal panel (right side) update every 15 seconds</span>
-<span class="c-t">4. Click "Execute Buy/Sell" to simulate a trade (paper mode only)</span>
-<span class="c-t">5. Open Slippage Tracker to log signal vs fill prices</span>
-
-<span class="c-g">## Status</span>
-<span class="c-t">Paper trading only — no real money involved.</span>
-<span class="c-t">Powered by simulated market data (Alpaca API integration roadmap).</span></pre>
+      <div class="panel-section">
+        <div class="panel-title">Performance Stats</div>
+        <div class="stats-grid" id="statsGrid"></div>
       </div>
-    </div>
-  </div>
 
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">6.2</div>
-      <div class="step-body">
-        <div class="step-title">Add collaborators for private feedback</div>
-        <div class="step-desc">To give specific people write access or manage feedback: go to <strong>Settings → Collaborators → Add people</strong>. Anyone can view a public repo and use a public GitHub Pages URL without being a collaborator.</div>
+      <div class="panel-section">
+        <div class="panel-title">Trade History</div>
+        <table class="trade-table">
+          <thead><tr><th>SYM</th><th>DIR</th><th>ENTRY</th><th>EXIT</th><th>P&L</th></tr></thead>
+          <tbody id="tradeHistoryBody"></tbody>
+        </table>
       </div>
-    </div>
-  </div>
 
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">6.3</div>
-      <div class="step-body">
-        <div class="step-title">Use GitHub Issues to collect tester feedback</div>
-        <div class="step-desc">Click the <strong>Issues</strong> tab in your repo and enable it. Share this with testers: <em>"Found a bug or have feedback? Open an issue at [repo URL]/issues"</em>. This gives you a clean, organized feedback pipeline.</div>
+      <div class="panel-section">
+        <div class="panel-title">AI Execution Log</div>
+        <div class="ai-log" id="aiLog"></div>
       </div>
-    </div>
+
+      <div class="panel-section">
+        <div class="panel-title">Active AI Prompt</div>
+        <div class="prompt-box">
+          <div class="prompt-label">→ CLAUDE SYSTEM PROMPT (ACTIVE)</div>
+          <div class="prompt-text" id="promptDisplay"></div>
+        </div>
+      </div>
+
+    </aside>
   </div>
 </div>
 
-<!-- PHASE 7 -->
-<div class="phase" id="phase7">
-  <div class="phase-header">
-    <div class="phase-num a">07</div>
-    <div><div class="phase-title">Push Updates</div><div class="phase-sub">How to update the live site after making changes</div></div>
-  </div>
+<script>
+// ─── SIMULATED MARKET DATA ───────────────────────────────────────────────────
+const SYMBOLS = ['AAPL','NVDA','TSLA','MSFT','GOOGL','META','SPY','QQQ'];
+const BASE_PRICES = { AAPL:182.63, NVDA:875.40, TSLA:182.10, MSFT:420.55, GOOGL:175.20, META:510.80, SPY:528.30, QQQ:448.90 };
+let prices = {...BASE_PRICES};
+let priceHistory = {};
+let activeSymbol = 'AAPL';
 
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">7.1</div>
-      <div class="step-body">
-        <div class="step-title">After editing your HTML files locally, push changes</div>
-        <div class="step-desc">Every time you change your files and push to the main branch, GitHub automatically redeploys — usually live within 60 seconds. Use these 3 commands every time.</div>
+// Init history
+SYMBOLS.forEach(sym => {
+  priceHistory[sym] = [];
+  let p = BASE_PRICES[sym];
+  for(let i=0; i<60; i++){
+    const o = p + (Math.random()-.5)*p*0.003;
+    const c = o + (Math.random()-.5)*p*0.004;
+    const h = Math.max(o,c) + Math.random()*p*0.002;
+    const l = Math.min(o,c) - Math.random()*p*0.002;
+    const v = Math.floor(Math.random()*5000000 + 1000000);
+    priceHistory[sym].push({o,h,l,c,v,t:Date.now()-((60-i)*300000)});
+    p = c;
+  }
+  prices[sym] = priceHistory[sym][priceHistory[sym].length-1].c;
+});
+
+// ─── TECHNICAL INDICATORS ────────────────────────────────────────────────────
+function calcRSI(closes, period=14){
+  let gains=0, losses=0;
+  for(let i=1;i<=period;i++){
+    const d = closes[i]-closes[i-1];
+    if(d>0) gains+=d; else losses+=Math.abs(d);
+  }
+  let avgG=gains/period, avgL=losses/period;
+  for(let i=period+1;i<closes.length;i++){
+    const d=closes[i]-closes[i-1];
+    avgG=(avgG*(period-1)+(d>0?d:0))/period;
+    avgL=(avgL*(period-1)+(d<0?Math.abs(d):0))/period;
+  }
+  return avgL===0?100:100-(100/(1+avgG/avgL));
+}
+
+function calcEMA(closes, period){
+  const k=2/(period+1);
+  let ema=closes[0];
+  for(let i=1;i<closes.length;i++) ema=closes[i]*k+ema*(1-k);
+  return ema;
+}
+
+function calcMACD(closes){
+  const ema12=calcEMA(closes,12), ema26=calcEMA(closes,26);
+  const macd=ema12-ema26;
+  return {macd:+macd.toFixed(2), signal:+(macd*0.9).toFixed(2), hist:+(macd*0.1).toFixed(2)};
+}
+
+function calcBB(closes, period=20){
+  const slice=closes.slice(-period);
+  const mean=slice.reduce((a,b)=>a+b,0)/period;
+  const std=Math.sqrt(slice.reduce((a,b)=>a+(b-mean)**2,0)/period);
+  return {upper:+(mean+2*std).toFixed(2), mid:+mean.toFixed(2), lower:+(mean-2*std).toFixed(2)};
+}
+
+function getIndicators(sym){
+  const candles = priceHistory[sym];
+  const closes = candles.map(c=>c.c);
+  const vols = candles.map(c=>c.v);
+  const rsi = calcRSI(closes);
+  const {macd, signal, hist} = calcMACD(closes);
+  const bb = calcBB(closes);
+  const ema20 = calcEMA(closes.slice(-20),20);
+  const ema50 = calcEMA(closes.slice(-50),50);
+  const avgVol = vols.slice(-10).reduce((a,b)=>a+b,0)/10;
+  const lastVol = vols[vols.length-1];
+  const volRatio = lastVol/avgVol;
+  const price = closes[closes.length-1];
+  return {rsi:+rsi.toFixed(1), macd, signal, hist, bb, ema20:+ema20.toFixed(2), ema50:+ema50.toFixed(2), volRatio:+volRatio.toFixed(2), price};
+}
+
+// ─── AI SIGNAL GENERATION ────────────────────────────────────────────────────
+function generateSignal(sym){
+  const ind = getIndicators(sym);
+  let score=0, reasons=[];
+  // RSI logic
+  if(ind.rsi<35){score+=2;reasons.push('RSI oversold('+ind.rsi+')');}
+  else if(ind.rsi>65){score-=2;reasons.push('RSI overbought('+ind.rsi+')');}
+  // MACD
+  if(ind.macd>ind.signal){score+=1;reasons.push('MACD bullish crossover');}
+  else{score-=1;reasons.push('MACD bearish crossover');}
+  // EMA
+  if(ind.ema20>ind.ema50){score+=1;reasons.push('EMA20>EMA50 (uptrend)');}
+  else{score-=1;reasons.push('EMA20<EMA50 (downtrend)');}
+  // BB
+  if(ind.price<ind.bb.lower){score+=1;reasons.push('Price below BB lower');}
+  else if(ind.price>ind.bb.upper){score-=1;reasons.push('Price above BB upper');}
+  // Volume
+  if(ind.volRatio>1.5){score+=0.5;reasons.push('High volume('+ind.volRatio+'x avg)');}
+  
+  const direction = score>=2?'BUY':score<=-2?'SELL':'HOLD';
+  const confidence = Math.min(95, Math.max(35, 50 + Math.abs(score)*12 + Math.random()*5));
+  const stopLoss = direction==='BUY'?+(ind.price*0.978).toFixed(2):+(ind.price*1.022).toFixed(2);
+  const takeProfit = direction==='BUY'?+(ind.price*1.035).toFixed(2):+(ind.price*0.965).toFixed(2);
+  
+  return {direction, confidence:+confidence.toFixed(1), reasons, indicators:ind, stopLoss, takeProfit, sym, price:ind.price};
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let currentSignal = generateSignal(activeSymbol);
+let trades = [
+  {sym:'NVDA', dir:'BUY', entry:860.20, exit:879.50, pnl:+19.30, pct:+2.24},
+  {sym:'AAPL', dir:'SELL', entry:185.10, exit:181.40, pnl:+3.70, pct:+2.00},
+  {sym:'TSLA', dir:'BUY', entry:178.30, exit:174.50, pnl:-3.80, pct:-2.13},
+  {sym:'MSFT', dir:'BUY', entry:415.20, exit:423.80, pnl:+8.60, pct:+2.07},
+  {sym:'META', dir:'SELL', entry:515.40, exit:508.20, pnl:+7.20, pct:+1.40},
+];
+let stats = {winRate:72, avgReturn:1.83, totalTrades:143, sharpe:2.14};
+
+// ─── RENDER FUNCTIONS ─────────────────────────────────────────────────────────
+function renderMarketStrip(){
+  const el = document.getElementById('marketStrip');
+  el.innerHTML = SYMBOLS.map(sym=>{
+    const cur=prices[sym], base=BASE_PRICES[sym];
+    const chg=((cur-base)/base*100).toFixed(2);
+    const cls = chg>=0?'up':'dn';
+    return `<div class="tick"><span class="tick-sym">${sym}</span><span class="tick-price ${cls}">$${cur.toFixed(2)}</span><span class="tick-chg ${cls}-bg">${chg>=0?'+':''}${chg}%</span></div>`;
+  }).join('');
+}
+
+function renderWatchlist(){
+  const el = document.getElementById('watchlistEl');
+  el.innerHTML = SYMBOLS.map(sym=>{
+    const cur=prices[sym], base=BASE_PRICES[sym];
+    const chg=((cur-base)/base*100).toFixed(2);
+    const cls = chg>=0?'up':'dn';
+    return `<div class="watchlist-item${sym===activeSymbol?' active':''}" onclick="selectSymbol('${sym}')">
+      <div class="wi-sym">${sym}</div>
+      <div class="wi-info">
+        <div class="wi-price">$${cur.toFixed(2)}</div>
+        <div class="wi-chg ${cls}">${chg>=0?'+':''}${chg}%</div>
       </div>
-    </div>
-    <div class="step-img">
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><span class="code-label">Run these 3 commands after every update</span></div>
-        <pre><span class="c-t"># Stage all changed files</span>
-<span class="c-g">git</span> add .
+    </div>`;
+  }).join('');
+}
 
-<span class="c-t"># Commit with a descriptive message</span>
-<span class="c-g">git</span> commit -m <span class="c-a">"Fix: slippage chart now shows market vs limit split"</span>
+function renderSignalsList(){
+  const el = document.getElementById('signalsList');
+  el.innerHTML = SYMBOLS.slice(0,5).map(sym=>{
+    const s=generateSignal(sym);
+    const cls=s.direction==='BUY'?'buy-sig':s.direction==='SELL'?'sell-sig':'';
+    return `<div class="signal-row">
+      <span class="signal-type ${cls}">${s.direction}</span>
+      <span class="signal-sym">${sym}</span>
+      <span class="signal-conf">⚡ ${s.confidence.toFixed(0)}%</span>
+    </div>`;
+  }).join('');
+}
 
-<span class="c-t"># Push to GitHub (triggers automatic redeployment)</span>
-<span class="c-g">git</span> push</pre>
+function renderIndicators(){
+  const ind = getIndicators(activeSymbol);
+  const items=[
+    {label:'RSI (14)', value:ind.rsi, cls: ind.rsi<40?'up':ind.rsi>60?'dn':'', sub: ind.rsi<40?'OVERSOLD':ind.rsi>60?'OVERBOUGHT':'NEUTRAL'},
+    {label:'MACD', value:ind.macd, cls: ind.macd>0?'up':'dn', sub:`Signal: ${ind.signal}`},
+    {label:'EMA 20/50', value:`${ind.ema20.toFixed(0)}`, cls: ind.ema20>ind.ema50?'up':'dn', sub: ind.ema20>ind.ema50?'GOLDEN CROSS':'DEATH CROSS'},
+    {label:'BB Width', value:`${((ind.bb.upper-ind.bb.lower)/ind.bb.mid*100).toFixed(1)}%`, cls:'', sub:`Mid: $${ind.bb.mid}`},
+  ];
+  document.getElementById('indicatorsRow').innerHTML = items.map(i=>`
+    <div class="ind-card">
+      <div class="ind-label">${i.label}</div>
+      <div class="ind-value ${i.cls}">${i.value}</div>
+      <div class="ind-sub">${i.sub}</div>
+    </div>`).join('');
+}
+
+function renderCurrentSignal(){
+  const s = currentSignal;
+  const cls = s.direction==='BUY'?'buy':s.direction==='SELL'?'sell':'hold';
+  const color = s.direction==='BUY'?'var(--green)':s.direction==='SELL'?'var(--red)':'var(--amber)';
+  document.getElementById('currentSignal').innerHTML = `
+    <div class="ai-signal ${cls}">
+      <div class="sig-header">
+        <span class="sig-action" style="color:${color}">${s.direction}</span>
+        <span class="sig-sym">${s.sym} @ $${s.price.toFixed(2)}</span>
+        <span class="sig-time">${new Date().toLocaleTimeString()}</span>
       </div>
-      <div class="callout success" style="margin-top:8px"><div class="callout-icon">✓</div><div>GitHub Pages auto-deploys on every push. Check the <strong>Actions</strong> tab to watch it go live — typically 30–90 seconds.</div></div>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">7.2</div>
-      <div class="step-body">
-        <div class="step-title">Edit files directly in the browser (no Git needed)</div>
-        <div class="step-desc">For quick fixes: navigate to the file in your repo, click the <strong>pencil icon</strong> to edit, make your change, and click <strong>Commit changes</strong>. The site updates automatically — no terminal required.</div>
+      <div class="sig-body">${s.reasons.join(' · ')}</div>
+      <div class="sig-meta">
+        <div class="sig-meta-item"><span>SL: </span><span style="color:var(--red)">$${s.stopLoss}</span></div>
+        <div class="sig-meta-item"><span>TP: </span><span style="color:var(--green)">$${s.takeProfit}</span></div>
+        <div class="sig-meta-item"><span>Conf: </span><span style="color:var(--amber)">${s.confidence}%</span></div>
       </div>
-    </div>
-  </div>
-
-  <div class="callout warn"><div class="callout-icon">!</div><div><strong>Cache tip:</strong> After deploying, your browser may show the old version. Hard refresh with <strong>Ctrl+Shift+R</strong> (Windows) or <strong>Cmd+Shift+R</strong> (Mac), or open in incognito mode to see the latest version.</div></div>
-</div>
-
-<!-- PHASE 8 -->
-<div class="phase" id="phase8">
-  <div class="phase-header">
-    <div class="phase-num r">08</div>
-    <div><div class="phase-title">Custom Domain (Optional)</div><div class="phase-sub">Replace the github.io URL with your own domain</div></div>
-  </div>
-
-  <div class="step">
-    <div class="step-header">
-      <div class="step-num">8.1</div>
-      <div class="step-body">
-        <div class="step-title">Point your domain to GitHub Pages</div>
-        <div class="step-desc">If you own a domain (e.g., <code style="color:var(--g);font-family:var(--mono)">nexaforgeai.com</code>), you can serve your GitHub Pages app from it. Two steps: add a CNAME file to your repo, then configure DNS at your registrar (Namecheap, GoDaddy, etc.).</div>
+      <div class="confidence-bar">
+        <div class="confidence-fill" style="width:${s.confidence}%;background:${color}"></div>
       </div>
-    </div>
-    <div class="step-img">
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">file</span><span class="code-label">Create a file named exactly: CNAME (no extension)</span></div>
-        <pre><span class="c-g">trader.nexaforgeai.com</span></pre>
-      </div>
-      <div style="margin-top:10px;font-size:12px;color:var(--text2)">Then at your DNS provider, add a CNAME record:</div>
-      <div class="code-block" style="margin-top:6px">
-        <div class="code-header"><span class="code-lang">dns</span><span class="code-label">Add this CNAME record at your domain registrar</span></div>
-        <pre><span class="c-b">Type:</span>  CNAME
-<span class="c-b">Name:</span>  trader
-<span class="c-b">Value:</span> nexaforgeai.github.io
-<span class="c-b">TTL:</span>   3600</pre>
-      </div>
-    </div>
-  </div>
+    </div>`;
+  const btn = document.getElementById('execBtn');
+  if(s.direction==='BUY'){ btn.className='exec-btn exec-buy'; btn.textContent='▲ EXECUTE BUY'; }
+  else if(s.direction==='SELL'){ btn.className='exec-btn exec-sell'; btn.textContent='▼ EXECUTE SELL'; }
+  else { btn.className='exec-btn exec-hold'; btn.textContent='◆ HOLD — WAIT FOR SIGNAL'; }
+}
 
-  <div class="callout tip"><div class="callout-icon">i</div><div>DNS propagation takes 5 minutes to 48 hours. HTTPS is automatic once GitHub detects your domain is pointing correctly — no SSL certificate setup needed.</div></div>
-</div>
+function renderStats(){
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-box"><div class="stat-num up">${stats.winRate}%</div><div class="stat-lbl">Win Rate</div></div>
+    <div class="stat-box"><div class="stat-num up">+${stats.avgReturn}%</div><div class="stat-lbl">Avg Return</div></div>
+    <div class="stat-box"><div class="stat-num">${stats.totalTrades}</div><div class="stat-lbl">Total Trades</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--purple)">${stats.sharpe}</div><div class="stat-lbl">Sharpe Ratio</div></div>`;
+}
 
-<!-- COMPARISON TABLE -->
-<div class="phase">
-  <div class="phase-header">
-    <div class="phase-num g">+</div>
-    <div><div class="phase-title">Hosting Options Comparison</div><div class="phase-sub">GitHub Pages vs alternatives</div></div>
-  </div>
+function renderTradeHistory(){
+  document.getElementById('tradeHistoryBody').innerHTML = trades.map(t=>`
+    <tr>
+      <td>${t.sym}</td>
+      <td style="color:${t.dir==='BUY'?'var(--green)':'var(--red)'}">${t.dir}</td>
+      <td>$${t.entry}</td>
+      <td>$${t.exit}</td>
+      <td class="${t.pnl>0?'pnl-pos':'pnl-neg'}">${t.pnl>0?'+':''}$${Math.abs(t.pnl).toFixed(2)} (${t.pct>0?'+':''}${t.pct}%)</td>
+    </tr>`).join('');
+}
 
-  <table class="comp-table">
-    <thead><tr><th>Feature</th><th>GitHub Pages</th><th>Netlify (Free)</th><th>Vercel (Free)</th></tr></thead>
-    <tbody>
-      <tr><td class="feature">Cost</td><td style="color:var(--g)">Free</td><td style="color:var(--g)">Free</td><td style="color:var(--g)">Free</td></tr>
-      <tr><td class="feature">Setup time</td><td style="color:var(--g)">~10 min</td><td>~5 min</td><td>~5 min</td></tr>
-      <tr><td class="feature">HTTPS</td><td style="color:var(--g)">Auto</td><td style="color:var(--g)">Auto</td><td style="color:var(--g)">Auto</td></tr>
-      <tr><td class="feature">Custom domain</td><td style="color:var(--g)">Yes</td><td style="color:var(--g)">Yes</td><td style="color:var(--g)">Yes</td></tr>
-      <tr><td class="feature">Auto-deploy on push</td><td style="color:var(--g)">Yes</td><td style="color:var(--g)">Yes</td><td style="color:var(--g)">Yes</td></tr>
-      <tr><td class="feature">Best for</td><td>Simple HTML/JS apps</td><td>More config options</td><td>React/Next.js apps</td></tr>
-      <tr><td class="feature">Repo required</td><td style="color:var(--g)">GitHub only</td><td>Any git provider</td><td>Any git provider</td></tr>
-    </tbody>
-  </table>
+const PROMPT_TEXT = `You are an expert algorithmic price action trader analyzing ${activeSymbol}. 
+Analyze the following real-time market data: RSI, MACD, EMA crossovers, Bollinger Bands, and volume. 
+Generate a BUY, SELL, or HOLD signal with: confidence score (0-100%), entry price, stop-loss, take-profit targets, and key reasoning. 
+Rules: Only trade signals with >65% confidence. Risk max 2% per trade. Prioritize trend-following setups with volume confirmation. 
+Output format: { signal, confidence, entry, stopLoss, takeProfit, reasoning[] }`;
 
-  <div class="callout success" style="margin-top:12px"><div class="callout-icon">✓</div><div><strong>Recommendation:</strong> GitHub Pages is the right choice here. Your apps are pure HTML/JS with no build step needed — Pages is the simplest, most direct path from code to live URL.</div></div>
-</div>
+function renderPrompt(){
+  document.getElementById('promptDisplay').textContent = PROMPT_TEXT;
+}
 
-<!-- FINAL CHECKLIST -->
-<div class="phase">
-  <div class="phase-header">
-    <div class="phase-num g">✓</div>
-    <div><div class="phase-title">Pre-Launch Checklist</div><div class="phase-sub">Verify everything before sharing your URL</div></div>
-  </div>
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px">
-    <ul class="checklist">
-      <li><div class="check">✓</div><span>Main file is named <code style="font-family:var(--mono);color:var(--g)">index.html</code> (not ai_trading_platform.html)</span></li>
-      <li><div class="check">✓</div><span>Repository is set to <strong>Public</strong></span></li>
-      <li><div class="check">✓</div><span>GitHub Pages source is set to <strong>main branch / root</strong></span></li>
-      <li><div class="check">✓</div><span>Actions tab shows a green checkmark (deployment succeeded)</span></li>
-      <li><div class="check">✓</div><span>Main URL loads in incognito browser window</span></li>
-      <li><div class="check">✓</div><span>Slippage tracker URL loads at <code style="font-family:var(--mono);color:var(--g)">/slippage-tracker.html</code></span></li>
-      <li><div class="check">✓</div><span>README.md has testing instructions and both live URLs</span></li>
-      <li><div class="check">✓</div><span>No API keys hardcoded in the HTML files (paper trading — you're fine)</span></li>
-    </ul>
-  </div>
-</div>
+// ─── AI LOG ───────────────────────────────────────────────────────────────────
+const logMessages = [
+  {t:'09:31:02', cls:'log-info', msg:'System initialized. Connecting to Alpaca API...'},
+  {t:'09:31:04', cls:'log-info', msg:'Market data feed established. Monitoring 8 symbols.'},
+  {t:'09:31:45', cls:'log-buy',  msg:'BUY signal: NVDA @ $860.20 | RSI:38 | MACD crossover | Conf:87%'},
+  {t:'09:45:12', cls:'log-info', msg:'Recalculating indicators for AAPL. RSI: 67.4'},
+  {t:'09:52:30', cls:'log-sell', msg:'SELL signal: AAPL @ $185.10 | RSI overbought | BB breach'},
+  {t:'10:14:05', cls:'log-warn', msg:'TSLA: Stop-loss triggered @ $174.50. Loss: -$3.80'},
+  {t:'10:31:22', cls:'log-buy',  msg:'BUY signal: MSFT @ $415.20 | Golden cross confirmed'},
+  {t:'10:58:44', cls:'log-info', msg:'Daily P&L: +$34.90 (+1.43%). Win rate: 72%.'},
+];
+function renderLog(){
+  const el = document.getElementById('aiLog');
+  el.innerHTML = logMessages.map(l=>`<div class="log-line"><span class="log-time">[${l.t}]</span><span class="${l.cls}">${l.msg}</span></div>`).join('');
+  el.scrollTop = el.scrollHeight;
+}
 
-<div class="footer">
-  <span>NexaForge AI · Deployment Guide</span>
-  <span>github.io · Free · HTTPS · Auto-deploy</span>
-</div>
+// ─── CHARTS ────────────────────────────────────────────────────────────────────
+let priceChartInst, volChartInst, rsiChartInst;
 
+function drawCharts(){
+  const candles = priceHistory[activeSymbol];
+  const labels = candles.slice(-40).map((c,i)=>i%10===0?new Date(c.t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'');
+  const closes = candles.slice(-40).map(c=>+c.c.toFixed(2));
+  const opens = candles.slice(-40).map(c=>+c.o.toFixed(2));
+  const vols = candles.slice(-40).map(c=>c.v);
+  const rsiFull = [];
+  for(let i=14;i<=candles.length;i++) rsiFull.push(+calcRSI(candles.slice(0,i).map(c=>c.c)).toFixed(1));
+  const rsiSlice = rsiFull.slice(-40);
+
+  if(priceChartInst) priceChartInst.destroy();
+  priceChartInst = new Chart(document.getElementById('priceChart'),{
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:'Price',data:closes,
+        borderColor:'#00d4a1',borderWidth:1.5,fill:true,
+        backgroundColor:(ctx)=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,260);g.addColorStop(0,'rgba(0,212,161,0.15)');g.addColorStop(1,'rgba(0,212,161,0)');return g;},
+        pointRadius:0,tension:0.3
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>`$${c.parsed.y.toFixed(2)}`}}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#4a5568',font:{size:9}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#4a5568',font:{size:9},callback:v=>'$'+v}}}}
+  });
+
+  if(volChartInst) volChartInst.destroy();
+  volChartInst = new Chart(document.getElementById('volChart'),{
+    type:'bar',
+    data:{labels,datasets:[{label:'Vol',data:vols,backgroundColor:'rgba(77,168,255,0.4)',borderColor:'#4da8ff',borderWidth:0.5}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#4a5568',font:{size:8}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#4a5568',font:{size:8},callback:v=>v>=1e6?(v/1e6).toFixed(1)+'M':v}}}}
+  });
+
+  if(rsiChartInst) rsiChartInst.destroy();
+  rsiChartInst = new Chart(document.getElementById('rsiChart'),{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'RSI',data:rsiSlice,borderColor:'#a78bfa',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false},
+      {label:'OB',data:Array(40).fill(70),borderColor:'rgba(255,77,106,0.3)',borderWidth:1,pointRadius:0,borderDash:[4,4],fill:false},
+      {label:'OS',data:Array(40).fill(30),borderColor:'rgba(0,212,161,0.3)',borderWidth:1,pointRadius:0,borderDash:[4,4],fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#4a5568',font:{size:8}}},y:{min:0,max:100,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#4a5568',font:{size:8}}}}}
+  });
+}
+
+// ─── INTERACTIONS ────────────────────────────────────────────────────────────
+function selectSymbol(sym){
+  activeSymbol = sym;
+  currentSignal = generateSignal(sym);
+  document.getElementById('activeSymbol').textContent = sym;
+  document.getElementById('activePrice').textContent = '$'+prices[sym].toFixed(2);
+  const chg=((prices[sym]-BASE_PRICES[sym])/BASE_PRICES[sym]*100).toFixed(2);
+  const chgEl = document.getElementById('activeChg');
+  chgEl.textContent = (chg>=0?'+':'')+chg+'%';
+  chgEl.className = 'chart-badge '+(chg>=0?'up-bg up':'dn-bg dn');
+  renderWatchlist(); renderCurrentSignal(); renderIndicators(); renderSignalsList(); drawCharts();
+  addLog('info',`Switched to ${sym}. Generating new signal analysis...`);
+}
+
+function setTF(btn, tf){ document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); addLog('info',`Timeframe changed to ${tf}. Reloading price data...`); }
+
+function executeSignal(){
+  const s = currentSignal;
+  if(s.direction==='HOLD'){addLog('warn','Cannot execute HOLD signal. Wait for directional signal.');return;}
+  addLog(s.direction==='BUY'?'buy':'sell',`EXECUTING ${s.direction}: ${s.sym} @ $${s.price.toFixed(2)} | SL:$${s.stopLoss} | TP:$${s.takeProfit} | Conf:${s.confidence}%`);
+  stats.totalTrades++;
+  renderStats();
+  alert(`✅ ${s.direction} order submitted!\n\n${s.sym} @ $${s.price.toFixed(2)}\nStop Loss: $${s.stopLoss}\nTake Profit: $${s.takeProfit}\nConfidence: ${s.confidence}%\n\n[Paper trading mode — no real money]`);
+}
+
+function addLog(type, msg){
+  const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  logMessages.push({t, cls:`log-${type}`, msg});
+  if(logMessages.length>50) logMessages.shift();
+  renderLog();
+}
+
+// ─── LIVE SIMULATION ─────────────────────────────────────────────────────────
+function tick(){
+  SYMBOLS.forEach(sym=>{
+    const last = priceHistory[sym][priceHistory[sym].length-1];
+    const drift = (Math.random()-.49)*last.c*0.0008;
+    const o = last.c;
+    const c = Math.max(o*0.99, o + drift);
+    const h = Math.max(o,c)+Math.random()*last.c*0.001;
+    const l = Math.min(o,c)-Math.random()*last.c*0.001;
+    const v = Math.floor(Math.random()*3000000+500000);
+    priceHistory[sym].push({o,h,l,c,v,t:Date.now()});
+    if(priceHistory[sym].length>100) priceHistory[sym].shift();
+    prices[sym] = c;
+  });
+  renderMarketStrip(); renderWatchlist();
+  if(Math.random()>0.7){
+    const price = prices[activeSymbol];
+    document.getElementById('activePrice').textContent = '$'+price.toFixed(2);
+    const chg=((price-BASE_PRICES[activeSymbol])/BASE_PRICES[activeSymbol]*100).toFixed(2);
+    const chgEl = document.getElementById('activeChg');
+    chgEl.textContent=(chg>=0?'+':'')+chg+'%';
+    chgEl.className='chart-badge '+(chg>=0?'up-bg up':'dn-bg dn');
+  }
+}
+
+function refreshSignals(){
+  currentSignal = generateSignal(activeSymbol);
+  renderCurrentSignal(); renderSignalsList(); renderIndicators();
+  drawCharts();
+  if(Math.random()>0.6) addLog('info',`Signal recalculated for ${activeSymbol}: ${currentSignal.direction} @ ${currentSignal.confidence}% confidence`);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderMarketStrip(); renderWatchlist(); renderSignalsList();
+renderCurrentSignal(); renderStats(); renderTradeHistory();
+renderIndicators(); renderLog(); renderPrompt(); drawCharts();
+
+setInterval(tick, 2000);
+setInterval(refreshSignals, 15000);
+</script>
 </body>
 </html>
